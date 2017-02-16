@@ -1,1 +1,1 @@
-# TMA4280LABS
+# Introduction to Supercomputing - TMA4280
