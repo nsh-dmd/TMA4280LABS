@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     }
 
     printf("reimann_sum = %f \n", s);
-    printf("error = %f \n", s - sum_larg());
+    printf("error = %f \n", fabs( s - sum_larg()) );
     
     return 0;
 }
