@@ -1,5 +1,6 @@
-#include "zeta0.h"
- #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 double* gen_reimann_vector(size_t n) {
     double *vector = malloc( n * sizeof(double) );
@@ -21,6 +22,10 @@ double reimann_pi() {
     return (M_PI * M_PI) / 6. ;
 }
 
+double abs_error(double x) {
+  return fabs(x-reimann_pi());
+}
+
 void unit_test(size_t n, double *vector) {
   
   double sum = 0;
@@ -32,18 +37,30 @@ void unit_test(size_t n, double *vector) {
   printf("n = %zu \n", n );
   printf("reimann pi = %f \n", pi);
   printf("reimann sum = %f \n", sum);
-  printf("error = %f \n", fabs(pi-sum));
-
+  printf("error = %f \n", abs_error(sum));
  }
 
+void verification_test(char *test_name, int n) {
 
+  double i = 0;
+  double error;
+
+  FILE *file = fopen("vtest.txt", "a+");
+  fprintf(file,"************************************\n %s:\n ************************************\n", test_name);
+  for (size_t k=1; k <= 24; k++) {
+    i = pow(2., k);
+    double *vector = gen_reimann_vector(i) ;
+    fprintf(file, "k = %zu \t Error = %f \n", k, abs_error(reimann_sum(vector, i)) );
+  }
+  fclose(file);
+}
 int main(int argc, char **argv) {
 
-  //size_t n = atoi(argv[1]);
+  int n = atoi(argv[1]);
 
   //  double *reimann_vector = gen_reimann_vector( n );
   unit_test( 3, gen_reimann_vector(3) );
-
+  verification_test("vtest n=2^k", n);
 
   return 0;
 }
