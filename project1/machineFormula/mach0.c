@@ -22,8 +22,8 @@ double sum_larg(double x) {
     return arctan(x)
 }
 
-double pi_quarter() {
-    return 4 * arctan(1./5) - arctan(1./239);
+double pi_machin() {
+    return 16 * arctan(1./5) - 4 * arctan(1./239);
 }
 
 void unit_test(size_t n, ) {
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
     }
 
     printf("reimann_sum = %f \n", s);
-    printf("error = %f \n", fabs(s - _larg(x));
+    printf("error = %f \n", fabs(s - pi_machin());
     
     return 0;
 }
