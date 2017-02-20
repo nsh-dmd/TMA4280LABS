@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 double* gen_reimann_vector(size_t n) {
+
     double *vector = malloc( n * sizeof(double) );
+
     for (size_t i = 1; i <= n; i++) {
         vector[i] = 1. / (i*i);
     }
     return vector;
 }
 
-double reimann_sum(double *vector, size_t n) {
+double sum(double *vector, size_t n) {
     double sum = 0;
     for (size_t i = 0; i < n; i++) {
         sum += vector[i];
@@ -22,7 +25,7 @@ double reimann_pi() {
 }
 
 double abs_error(double x) {
-  return fabs(x-reimann_pi());
+  return fabs( x - reimann_pi() );
 }
 
 void unit_test(size_t n, double *vector) {
@@ -57,6 +60,25 @@ void verification_test(char *test_name, int n) {
   fclose(file);
   free(vector);
 
+}
+
+ }
+
+void verification_test(char *test_name, int n) {
+
+  double i = 0;
+  double error;
+  double *vector;
+
+  FILE *file = fopen("vtest.txt", "a+");
+  fprintf(file,"************************************\n %s:\n ************************************\n", test_name);
+
+  for (size_t k=1; k <= 24; k++) {
+    i = pow(2., k);
+    vector = gen_reimann_vector(i) ;
+    fprintf(file, "k = %zu \t Error = %f \n", k, abs_error(reimann_sum(vector, i)) );
+  }
+  fclose(file);
 }
 
 int main(int argc, char **argv) {
