@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-double* gen_vector(double x, size_t n) {
+double* gen_machin_vector(double x, size_t n) {
     double *vector = malloc( n * sizeof(double) );
     for (size_t i = 1; i <= n; i++) {
         vector[i] = pow (-1., i-1) * pow(x, 2*i-1) / (2*i-1);
@@ -10,7 +10,7 @@ double* gen_vector(double x, size_t n) {
     return vector;
 }
 
-double reimann_sum(double *vector, size_t n) {
+double machin_sum(double *vector, size_t n) {
     double s = 0;
     for (size_t i = 0; i < n; i++) {
         s += vector[i];
@@ -18,15 +18,17 @@ double reimann_sum(double *vector, size_t n) {
     return s;
 }
 
-double sum_larg(double x) {
-    return arctan(x)
-}
 
-double pi_machin() {
+double machin_pi() {
     return 16 * arctan(1./5) - 4 * arctan(1./239);
 }
 
-void unit_test(size_t n, ) {
+double abs_error(double sum) {
+  return fabs(sum - machin_pi);
+}
+
+void unit_test(size_t n, double *vector) {
+
 }
 
 int main(int argc, char **argv) {
@@ -41,7 +43,7 @@ int main(int argc, char **argv) {
         s = machine_formula(vector, k);
     }
 
-    printf("reimann_sum = %f \n", s);
+    printf("machin_sum = %f \n", s);
     printf("error = %f \n", fabs(s - pi_machin());
     
     return 0;
