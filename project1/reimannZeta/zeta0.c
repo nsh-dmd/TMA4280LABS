@@ -7,7 +7,7 @@ double* gen_reimann_vector(size_t n) {
 
   double *vector = malloc( n * sizeof(double) );
 
-  for (size_t i = 1; i <= n; i++) {
+   for (size_t i = 1; i <= n; i++) {
         vector[i] = 1. / (i*i);
   }
   return vector;
@@ -63,8 +63,7 @@ void verification_test(char *test_name, int n) {
       fprintf(pFile, "k = %zu \t Error = %f \n", k, abs_error(sum(vector, i)) );
       //free(vector);
      }
-  }
-    
+  }    
   else fprintf( pFile, "k = %d \t Error = %f \n", n, abs_error(reimann_pi()) );
   
   fclose(pFile);

@@ -13,7 +13,9 @@ double* gen_machin_vector(double x, size_t n) {
     return vector;
 }
 
+
 double sum(double *vector, size_t n) {
+
     double s = 0;
     for (size_t i = 0; i < n; i++) {
         s += vector[i];
@@ -67,6 +69,7 @@ void verification_test(char *test_name, int n) {
   
   fclose(pFile);
 }
+
 
 int main(int argc, char **argv) {
     
