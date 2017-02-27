@@ -23,9 +23,9 @@ double calculate_sum(double *vector, size_t n) {
     return s;
 }
 
-double machin_formula(int n) {
-  double sum_x1 = calculate_sum( gen_machin_vector(X1, n), n );
-  double sum_x2 = calculate_sum( gen_machin_vector(X2, n), n );
+double machin_formula(int n, double* vector) {
+  double sum_x1 = calculate_sum( vector, n );
+  double sum_x2 = calculate_sum( vector, n );
   return 16 * sum_x1 - 4 * sum_x2;
 }
 
@@ -87,7 +87,7 @@ double* distribute_vector ( int n, doubel *vector, int nproc ) {
 int main(int argc, char **argv) {
 
     size_t n = atoi(argv[1]);
-    if ( argc < 2 || (x & (x - 1)) ) {
+    if ( argc < 2 || (n & (n - 1)) ) {
       printf("Usage:\n");
       printf("  make n\n\n");
       printf("Arguments:\n");
@@ -111,14 +111,13 @@ int main(int argc, char **argv) {
     if (rank == 0) {
         MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
         scattered_v = distribute_vector(int n, double* vector, int nproc);
-        MPI_Reduce( &partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-        printf("Error = %e\n", );
+        MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+        printf("Error = %e\n", abs_error(total_sum));
         free(vector);
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
-
     }
 
-    partial_sum = compute_sum(calculate_sum, n);
+    partial_sum = machin_formula(scattered_v, n);
     free(scattered_v);
     MPI_Finalize();
 
