@@ -29,7 +29,7 @@ double machin_pi() {
 }
 
 double abs_error(double s) {
-  return fabs(s - M_PI);
+  return fabs(s - PI);
 }
 
 Vector_Tuple gen_machin_vector ( uint16_t n ) {
@@ -42,17 +42,14 @@ Vector_Tuple gen_machin_vector ( uint16_t n ) {
         vectors.v1[i] = pow (-1., i-1) * pow(X1, 2*i-1) / (2*i-1);
         vectors.v2[i] = pow (-1., i-1) * pow(X2, 2*i-1) / (2*i-1);
     }
-    free(vectors.v1);
-    free(vectors.v2);
-    // free(vectors);
     return vectors;
 }
 void print_to_file(char* test_name, int n, int nproc, double walltime, double error) {
     FILE *pFile = fopen("parallel_test.txt", "a+");
-    fprintf( pFile,"**************************\n %s:\n", test_name );
-    fputs( "**************************\n", pFile );
-    fprintf(pFile,"n = %d\n nproc = %d\n walltime = %f\n err = %.10e\n", n, nproc, walltime, error);
-    fputs( "**************************\n", pFile );
+    fprintf( pFile,"*************%s*************\n", test_name );
+    // fputs( "**************************\n", pFile );
+    fprintf(pFile,"n = %d\n nproc = %d\n walltime = %f\n err = %e\n\n", n, nproc, walltime, error);
+    // fputs( "**************************\n", pFile );
 
 }
 
@@ -68,7 +65,6 @@ int main(int argc, char **argv) {
       return 1;
     }
 
-    double partial_sum, total_sum;
     int rank, nproc;
 
     // double *vector_z, *scattered_z;
@@ -83,7 +79,8 @@ int main(int argc, char **argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
-    uint16_t chunk_size = n/nproc;
+    uint16_t chunk_size = (double)n/nproc;
+    double partial_sum, total_sum;
 
     if (rank == 0) {
         start_time = MPI_Wtime();
@@ -104,15 +101,15 @@ int main(int argc, char **argv) {
     MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
+        print_to_file("Machin", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
-        // print_to_file("")
     }
 
     free(scattered_m.v1);
     free(scattered_m.v2);
-    // free(scattered_m);
-    // free(scattered_z);
+    free(vectors_m.v1);
+    free(vectors_m.v2);
 
     MPI_Finalize();
 
