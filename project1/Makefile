@@ -11,8 +11,9 @@ EXESRC=main.c
 EXEOBJ=$(patsubst %.c, %.o, $(EXESRC))
 CLEAN_FILES+=$(EXE) $(EXEOBJ)
 
-LIB=libfunction.a
-LIBSRC=function.c
+LIB=util.a zeta0.a mach0.a
+LIBSRC=util.c zeta0.c mach0.c
+LIBHEADER=util.h
 LIBOBJ=$(patsubst %.c, %.o, $(LIBSRC))
 CLEAN_FILES+=$(LIB) $(LIBOBJ)
 

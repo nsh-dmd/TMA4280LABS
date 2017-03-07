@@ -3,8 +3,6 @@
 #include <math.h>
 #include <mpi.h>
 
-static const double X1 = 1. / 5;
-static const double X2 = 1. / 239;
 
 double* gen_machin_vector(double x, size_t n) {
     double *vector = malloc( n * sizeof(double) );
