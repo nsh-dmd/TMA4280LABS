@@ -70,7 +70,6 @@ int main(int argc, char **argv) {
 
     double partial_sum, total_sum;
     int rank, nproc;
-    uint16_t chunk_size = n/nproc;
 
     // double *vector_z, *scattered_z;
     Vector_Tuple vectors_m, scattered_m;
@@ -84,6 +83,8 @@ int main(int argc, char **argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
+    uint16_t chunk_size = n/nproc;
+
     if (rank == 0) {
         start_time = MPI_Wtime();
         MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -95,16 +96,14 @@ int main(int argc, char **argv) {
     scattered_m.v1 = (double*) malloc(chunk_size * sizeof(double));
     scattered_m.v2 = (double*) malloc(chunk_size * sizeof(double));
 
-    if (rank == 0) {
-        // send partial vectors to each process
-        MPI_Scatter( vectors_m.v1, chunk_size, MPI_DOUBLE, scattered_m.v1, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
-        MPI_Scatter( vectors_m.v2, chunk_size, MPI_DOUBLE, scattered_m.v2, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
-    }
+    // send partial vectors to each process
+    MPI_Scatter( vectors_m.v1, chunk_size, MPI_DOUBLE, scattered_m.v1, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
+    MPI_Scatter( vectors_m.v2, chunk_size, MPI_DOUBLE, scattered_m.v2, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
 
     partial_sum = machin_formula(n, scattered_m);
+    MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
-        MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
         // print_to_file("")
