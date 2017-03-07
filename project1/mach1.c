@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
     MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
-        print_to_file("Machin", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
+        print_to_file("Machin MPI", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
     }

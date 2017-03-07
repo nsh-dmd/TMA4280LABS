@@ -29,10 +29,10 @@ double abs_error(double s) {
 }
 void print_to_file(char* test_name, int n, int nproc, double walltime, double error) {
     FILE *pFile = fopen("parallel_test.txt", "a+");
-    fprintf( pFile,"**************************\n %s:\n", test_name );
+    fprintf( pFile,"*************%s*************\n", test_name );
     fputs( "**************************\n", pFile );
-    fprintf(pFile,"n = %d\n nproc = %d\n walltime = %f\n err = %.10e\n", n, nproc, walltime, error);
-    fputs( "**************************\n", pFile );
+    fprintf(pFile,"n = %d\nnproc = %d\nwalltime = %f\nerr = %e\n\n", n, nproc, walltime, error);
+    // fputs( "**************************\n", pFile );
 
 }
 int main(int argc, char **argv) {
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
     MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
-        print_to_file("Reimann", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
+        print_to_file("Reimann MPI", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
     }
