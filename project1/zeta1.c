@@ -5,7 +5,7 @@
 
 #define PI 3.14159265358979323846
 
-double calculate_sum(double *vector, uint16_t n) {
+double calculate_sum(double *vector, int n) {
     double s = 0;
     for (size_t i = 0; i < n; i++) {
         s += vector[i];
@@ -13,14 +13,14 @@ double calculate_sum(double *vector, uint16_t n) {
     return s;
 }
 
-double* gen_reimann_vector (uint16_t n, double *vector) {
+double* gen_reimann_vector (int n, double *vector) {
    for (size_t i = 1; i <= n; i++) {
         vector[i] = 1. / (i*i);
   }
   return vector;
 }
 
-double reimann_pi (uint16_t n, double *v) {
+double reimann_pi (int n, double *v) {
     return sqrt(6.0 * calculate_sum(v , n));
 }
 
@@ -37,7 +37,7 @@ void print_to_file(char* test_name, int n, int nproc, double walltime, double er
 }
 int main(int argc, char **argv) {
 
-    uint16_t n = atoi(argv[1]);
+    int n = atoi(argv[1]);
     if ( argc < 2 || (n & (n - 1)) ) {
       printf("Usage:\n");
       printf("  make n\n\n");
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
-    uint16_t chunk_size = (double)n/nproc;
+    int chunk_size = n/nproc;
     double partial_sum, total_sum;
 
     if (rank == 0) {
