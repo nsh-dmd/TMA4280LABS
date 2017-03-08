@@ -1,13 +1,17 @@
-#include "util.h"
-#include "zeta0.c"
-#include "mach0.c"
+// #include "util.h"
+#include "zeta/zeta0.h"
+#include "mach/mach0.h"
 
  void unit_test(size_t n, char* test_name) {
 
    double approx = 0.;
 
    if ( strcmp(test_name, "machin") == 0 )  approx = machin_formula(n);
-   else if( strcmp(test_name, "reimann") == 0 ) approx = reimann_pi(n);
+   else if( strcmp(test_name, "reimann") == 0 ) {
+       double *v = gen_reimann_vector(n);
+       approx = reimann_pi(n, v);
+       free(v);
+   }
    else {
        printf("\"%s\" is not defined. Select reimann/machin\n", test_name);
        return;

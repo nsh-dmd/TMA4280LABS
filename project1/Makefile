@@ -1,5 +1,5 @@
-CC=gcc
-CFLAGS = -std=c99 -O2
+CC=mpicc
+CFLAGS = -std=c99 -O2 -Wall -g
 LDFLAGS=
 LNKLIBS= -lm
 
@@ -11,18 +11,17 @@ EXESRC=main.c
 EXEOBJ=$(patsubst %.c, %.o, $(EXESRC))
 CLEAN_FILES+=$(EXE) $(EXEOBJ)
 
-LIB=util.a zeta0.a mach0.a
-LIBSRC=util.c zeta0.c mach0.c
-LIBHEADER=util.h
+LIB=libutil.a
+LIBSRC=util.c zeta/zeta1.c utest.c vtest.c reduc/recur.c reduc/allreduce.c zeta/zeta0.c zeta/zeta2.c mach/mach0.c mach/mach1.c mach/mach2.c
+LIBHEADER=util.h zeta/zeta0.h mach/mach0.h
 LIBOBJ=$(patsubst %.c, %.o, $(LIBSRC))
 CLEAN_FILES+=$(LIB) $(LIBOBJ)
 
 CLEAN_FILES+= utest utest.o
 CLEAN_FILES+= vtest vtest.o
 
-# Implicit rule for compilation of all objects
 %.o:%.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to build the library
 $(LIB): $(LIBOBJ)
@@ -50,6 +49,25 @@ vtest:	vtest.o $(LIB)
 	@echo "EXE $@"
 	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
 	./$@
+
+# MPI zeta
+zeta1:	zeta/zeta1.o $(LIB)
+	@echo "EXE $@"
+	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+	./$@
+
+# Recursive doubling sum
+recur:	reduc/recur.o $(LIB)
+	@echo "EXE $@"
+	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+	./$@
+
+# Allreduce
+allreduce: reduc/allreduce.o $(LIB)
+	@echo "EXE $@"
+	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+	./$@
+
 
 clean:
 	rm -f $(CLEAN_FILES)

@@ -32,7 +32,7 @@ double abs_error(double s) {
   return fabs(s - PI);
 }
 
-Vector_Tuple gen_machin_vector ( int n ) {
+Vector_Tuple gen_machin_vector ( uint16_t n ) {
     // int rest = (double)n % nproc;
     Vector_Tuple vectors;
     vectors.v1 = (double*) malloc( n * sizeof(double) );
@@ -42,20 +42,23 @@ Vector_Tuple gen_machin_vector ( int n ) {
         vectors.v1[i] = pow (-1., i-1) * pow(X1, 2*i-1) / (2*i-1);
         vectors.v2[i] = pow (-1., i-1) * pow(X2, 2*i-1) / (2*i-1);
     }
+    free(vectors.v1);
+    free(vectors.v2);
+    // free(vectors);
     return vectors;
 }
 void print_to_file(char* test_name, int n, int nproc, double walltime, double error) {
     FILE *pFile = fopen("parallel_test.txt", "a+");
-    fprintf( pFile,"*************%s*************\n", test_name );
-    // fputs( "**************************\n", pFile );
-    fprintf(pFile,"n = %d\n nproc = %d\n walltime = %f\n err = %e\n\n", n, nproc, walltime, error);
-    // fputs( "**************************\n", pFile );
+    fprintf( pFile,"**************************\n %s:\n", test_name );
+    fputs( "**************************\n", pFile );
+    fprintf(pFile,"n = %d\n nproc = %d\n walltime = %f\n err = %.10e\n", n, nproc, walltime, error);
+    fputs( "**************************\n", pFile );
 
 }
 
 int main(int argc, char **argv) {
 
-    int n = atoi(argv[1]);
+    uint16_t n = atoi(argv[1]);
     if ( argc < 2 || (n & (n - 1)) ) {
       printf("Usage:\n");
       printf("  make n\n\n");
@@ -65,6 +68,7 @@ int main(int argc, char **argv) {
       return 1;
     }
 
+    double partial_sum, total_sum;
     int rank, nproc;
 
     // double *vector_z, *scattered_z;
@@ -79,8 +83,7 @@ int main(int argc, char **argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
-    int chunk_size = (double)n/nproc;
-    double partial_sum, total_sum;
+    uint16_t chunk_size = n/nproc;
 
     if (rank == 0) {
         start_time = MPI_Wtime();
@@ -93,23 +96,24 @@ int main(int argc, char **argv) {
     scattered_m.v1 = (double*) malloc(chunk_size * sizeof(double));
     scattered_m.v2 = (double*) malloc(chunk_size * sizeof(double));
 
-    // send partial vectors to each process
-    MPI_Scatter( vectors_m.v1, chunk_size, MPI_DOUBLE, scattered_m.v1, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
-    MPI_Scatter( vectors_m.v2, chunk_size, MPI_DOUBLE, scattered_m.v2, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
+        // send partial vectors to each process
+        MPI_Scatter( vectors_m.v1, chunk_size, MPI_DOUBLE, scattered_m.v1, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
+        MPI_Scatter( vectors_m.v2, chunk_size, MPI_DOUBLE, scattered_m.v2, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
+    }
 
     partial_sum = machin_formula(n, scattered_m);
-    MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
-        print_to_file("Machin MPI", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
+        MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
+        // print_to_file("")
     }
 
     free(scattered_m.v1);
     free(scattered_m.v2);
-    free(vectors_m.v1);
-    free(vectors_m.v2);
+    // free(scattered_m);
+    // free(scattered_z);
 
     MPI_Finalize();
 
