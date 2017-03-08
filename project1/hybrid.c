@@ -34,7 +34,7 @@ double abs_error(double s) {
   return fabs(s - PI);
 }
 
-Vector_Tuple gen_machin_vector ( uint16_t n ) {
+Vector_Tuple gen_machin_vector ( int n ) {
     // int rest = (double)n % nproc;
     Vector_Tuple vectors;
     vectors.v1 = (double*) malloc( n * sizeof(double) );
@@ -58,7 +58,7 @@ void print_to_file(char* test_name, int n, int nproc, double walltime, double er
 
 int main(int argc, char **argv) {
 
-    uint16_t n = atoi(argv[1]);
+    int n = atoi(argv[1]);
     if ( argc < 2 || (n & (n - 1)) ) {
       printf("Usage:\n");
       printf("  make n\n\n");
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
-    uint16_t chunk_size = (double)n/nproc;
+    int chunk_size = (double)n/nproc;
     double partial_sum, total_sum;
 
     if (rank == 0) {
