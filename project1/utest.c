@@ -1,4 +1,4 @@
-// #include "util.h"
+#include "util.h"
 #include "zeta/zeta0.h"
 #include "mach/mach0.h"
 
@@ -6,7 +6,10 @@
 
    double approx = 0.;
 
-   if ( strcmp(test_name, "machin") == 0 )  approx = machin_formula(n);
+   if ( strcmp(test_name, "machin") == 0 ) {
+     Vector_Tuple t = gen_machin_vector(n);  
+     approx = machin_formula(n, t);
+   }       
    else if( strcmp(test_name, "reimann") == 0 ) {
        double *v = gen_reimann_vector(n);
        approx = reimann_pi(n, v);

@@ -8,11 +8,6 @@
 #define X1 1. / 5
 #define X2 1. / 239
 
-typedef struct {
-    double* v1;
-    double* v2;
-} Vector_Tuple;
-
 // static const double X1 = 1. / 5;
 // static const double X2 = 1. / 239;
 // static const double PI = 3.14159265358979323846;

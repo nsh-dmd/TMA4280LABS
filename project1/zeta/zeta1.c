@@ -38,21 +38,17 @@
 int main(int argc, char **argv) {
 
     int n = atoi(argv[1]);
-    if ( argc < 2 || (n & (n - 1)) ) {
-      printf("Usage:\n");
-      printf("  make n\n\n");
-      printf("Arguments:\n");
-      printf("  n: the problem size (must be a power of 2)\n");
+    if ( argc < 2 || power_of_2(n) ) {
       MPI_Finalize();
       return 1;
     }
 
     int rank, nproc;
 
-    double *vector_z;// = (double*) malloc( n * sizeof(double) );
+    double *vector_z=NULL;// = (double*) malloc( n * sizeof(double) );
     // Vector_Tuple vectors_m, scattered_m;
 
-    double start_time;
+    double start_time = 0.0;
     // double mach_time = 0, zeta_time = 0;
 
 

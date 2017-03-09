@@ -1,3 +1,5 @@
+#include "util.h"
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,12 +8,11 @@
 #define PI 3.14159265358979323846
 #define X1 1. / 5
 #define X2 1. / 239
-
 typedef struct {
     double* v1;
     double* v2;
 } Vector_Tuple;
-
+/*
 double calculate_sum (double *vector, size_t n) {
   double s = 0;
   for (size_t i = 0; i < n; i++)
@@ -22,6 +23,7 @@ double calculate_sum (double *vector, size_t n) {
 double abs_error(double s) {
   return fabs(s - PI);
 }
+*/
 double* gen_reimann_vector (size_t n) {
   double *vector = (double*) malloc( n * sizeof(double) );
    for (size_t i = 1; i <= n; i++) {
@@ -68,9 +70,6 @@ double machin_formula(int n) {
 // double machin_formula(int n, Vector_Tuple t) {
 //     return 16 * calculate_sum(t.v1, n) - 4 * calculate_sum( t.v2, n );
 // }
-double machin_pi() {
-    return 16 * atan(X1) - 4 * atan(X2);
-}
 
 void verification_test(int n) {
 
@@ -102,6 +101,5 @@ void verification_test(int n) {
 int main(int argc, char const **argv) {
     int n = atoi(argv[1]);
     verification_test(n);
-
     return 0;
 }

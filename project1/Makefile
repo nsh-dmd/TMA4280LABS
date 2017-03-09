@@ -1,5 +1,5 @@
 CC=mpicc
-CFLAGS = -std=c99 -O2 -Wall -g
+CFLAGS = -std=c99 -O2 -Wall -g -fopenmp
 LDFLAGS=
 LNKLIBS= -lm
 
@@ -28,7 +28,7 @@ $(LIB): $(LIBOBJ)
 	@echo "LIB $@"
 	@ar r $@ $^
 
-all:	$(EXE) utest vtest
+all:	$(EXE) utest vtest zeta1 recur allreduce
 
 # Program
 $(EXE):	$(EXEOBJ) $(LIB)
