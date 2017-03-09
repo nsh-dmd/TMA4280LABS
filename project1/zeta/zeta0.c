@@ -1,4 +1,5 @@
 #include "zeta0.h"
+
 double* gen_reimann_vector (size_t n) {
   double *vector = (double*) malloc( n * sizeof(double) );
    for (size_t i = 1; i <= n; i++) {

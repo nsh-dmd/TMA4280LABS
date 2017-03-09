@@ -12,7 +12,7 @@ EXEOBJ=$(patsubst %.c, %.o, $(EXESRC))
 CLEAN_FILES+=$(EXE) $(EXEOBJ)
 
 LIB=libutil.a
-LIBSRC=util.c zeta/zeta1.c utest.c vtest.c reduc/recur.c reduc/allreduce.c zeta/zeta0.c zeta/zeta2.c mach/mach0.c mach/mach1.c mach/mach2.c
+LIBSRC=util.c zeta/zeta1.c utest.c vtest.c reduc/recur.c reduc/allreduce.c zeta/zeta0.c mach/mach0.c mach/mach1.c 
 LIBHEADER=util.h zeta/zeta0.h mach/mach0.h
 LIBOBJ=$(patsubst %.c, %.o, $(LIBSRC))
 CLEAN_FILES+=$(LIB) $(LIBOBJ)
@@ -28,7 +28,7 @@ $(LIB): $(LIBOBJ)
 	@echo "LIB $@"
 	@ar r $@ $^
 
-all:	$(EXE) utest vtest
+all:	$(EXE) utest vtest zeta1 recur allreduce
 
 # Program
 $(EXE):	$(EXEOBJ) $(LIB)

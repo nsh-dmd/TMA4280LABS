@@ -1,7 +1,7 @@
 // #include <stdio.h>
 // #include <stdlib.h>
 // #include <math.h>
-#include "../zeta/zeta0.h"
+#include "zeta0.h"
 #include "mpi.h"
 
 // #define PI 3.14159265358979323846
@@ -38,21 +38,16 @@
 int main(int argc, char **argv) {
 
     int n = atoi(argv[1]);
-    if ( argc < 2 || (n & (n - 1)) ) {
-      printf("Usage:\n");
-      printf("  make n\n\n");
-      printf("Arguments:\n");
-      printf("  n: the problem size (must be a power of 2)\n");
-      MPI_Finalize();
+    if ( argc < 2 || !power_of_2(n) ) {
       return 1;
     }
 
     int rank, nproc;
 
-    double *vector_z;// = (double*) malloc( n * sizeof(double) );
+    double *vector_z= (double*) malloc( n * sizeof(double) );
     // Vector_Tuple vectors_m, scattered_m;
 
-    double start_time;
+    double start_time = 0.0;
     // double mach_time = 0, zeta_time = 0;
 
 
@@ -87,9 +82,6 @@ int main(int argc, char **argv) {
         free(scattered_z);
         free(vector_z);
     }
-
-
-
     MPI_Finalize();
 
   return 0;

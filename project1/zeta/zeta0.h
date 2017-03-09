@@ -1,4 +1,4 @@
-#include "util.h"
+#include "../util.h"
 // #include <math.h>
 
 double* gen_reimann_vector (size_t n);
