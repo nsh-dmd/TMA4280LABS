@@ -45,7 +45,6 @@ int main(int argc, char **argv) {
     int rank, nproc;
 
     double *vector_z= (double*) malloc( n * sizeof(double) );
-    // Vector_Tuple vectors_m, scattered_m;
 
     double start_time = 0.0;
     // double mach_time = 0, zeta_time = 0;

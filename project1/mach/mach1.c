@@ -7,7 +7,6 @@ int main(int argc, char **argv) {
     int n = atoi(argv[1]);
     if ( argc < 2 || !power_of_2(n) ) {
     //   MPI_Finalize();
-        printf("Hei\n" );
       return 1;
     }
 

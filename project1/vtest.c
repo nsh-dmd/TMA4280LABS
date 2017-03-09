@@ -98,8 +98,8 @@ void verification_test(int n) {
   fclose(pFile);
 }
 
-int main(int argc, char const **argv) {
-    int n = atoi(argv[1]);
-    verification_test(n);
-    return 0;
-}
+// int main(int argc, char const **argv) {
+//     int n = atoi(argv[1]);
+//     verification_test(n);
+//     return 0;
+// }
