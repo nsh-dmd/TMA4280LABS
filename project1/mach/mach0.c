@@ -19,6 +19,7 @@
 double machin_formula(int n, Vector_Tuple t) {
     return 16 * calculate_sum(t.v1, n) - 4 * calculate_sum( t.v2, n );
 }
+
 double machin_pi() {
     return 16 * atan(X1) - 4 * atan(X2);
 }

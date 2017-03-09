@@ -1,5 +1,5 @@
 CC=mpicc
-CFLAGS = -std=c99 -O2 -Wall -g
+CFLAGS = -std=c99 -O2 -Wall -g -fopenmp
 LDFLAGS=
 LNKLIBS= -lm
 
