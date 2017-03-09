@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "mpi.h"
+#include <mpi.h>
 
 #define PI 3.14159265358979323846
 
