@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
     global_sum = recursive_doubling(nproc, rank, global_sum);
 
     if (rank==0) {
-        print_to_file("Reimann MPI", n, nproc, MPI_Wtime() - start_time, abs_error(global_sum));
+        print_to_file("recur", n, nproc, MPI_Wtime() - start_time, abs_error(global_sum));
         printf("Error = %e\n", abs_error(global_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
         free(vector);

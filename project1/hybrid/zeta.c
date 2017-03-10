@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         start_time = MPI_Wtime();
         MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
         // partial machin vectors sends to every process
-        vector = gen_reimann_vector(n, vector);
+        vector = gen_reimann_vector(n);
     }
 
     // each process will have its own partial vector
