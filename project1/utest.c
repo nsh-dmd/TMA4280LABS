@@ -24,6 +24,7 @@
    printf( "Calculated pi = %f \n", approx );
    printf( "Error = %f \n", abs_error(approx) );
  }
+
 int main(int argc, char **argv) {
   unit_test(3, "machin");
   unit_test(3, "reimann");

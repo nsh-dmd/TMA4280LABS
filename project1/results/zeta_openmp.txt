@@ -1,0 +1,138 @@
+*************zeta_openmp*************
+n = 32
+ nproc/nthreads = 20
+ walltime = 0.000508
+ err = 3.046035e-02
+
+*************zeta_openmp*************
+n = 32
+ nproc/nthreads = 20
+ walltime = 0.000487
+ err = 3.046035e-02
+
+*************zeta_openmp*************
+n = 32
+ nproc/nthreads = 20
+ walltime = 0.000508
+ err = 3.046035e-02
+
+*************zeta_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000479
+ err = 1.507412e-02
+
+*************zeta_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000480
+ err = 1.507412e-02
+
+*************zeta_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000506
+ err = 1.507412e-02
+
+*************zeta_openmp*************
+n = 128
+ nproc/nthreads = 20
+ walltime = 0.000500
+ err = 7.498555e-03
+
+*************zeta_openmp*************
+n = 128
+ nproc/nthreads = 20
+ walltime = 0.000447
+ err = 7.498555e-03
+
+*************zeta_openmp*************
+n = 256
+ nproc/nthreads = 20
+ walltime = 0.000483
+ err = 3.739715e-03
+
+*************zeta_openmp*************
+n = 256
+ nproc/nthreads = 20
+ walltime = 0.000476
+ err = 3.739715e-03
+
+*************zeta_openmp*************
+n = 512
+ nproc/nthreads = 20
+ walltime = 0.000467
+ err = 1.867475e-03
+
+*************zeta_openmp*************
+n = 512
+ nproc/nthreads = 20
+ walltime = 0.000487
+ err = 1.867475e-03
+
+*************zeta_openmp*************
+n = 1024
+ nproc/nthreads = 20
+ walltime = 0.000486
+ err = 9.331426e-04
+
+*************zeta_openmp*************
+n = 1024
+ nproc/nthreads = 20
+ walltime = 0.000488
+ err = 9.331426e-04
+
+*************zeta_openmp*************
+n = 2048
+ nproc/nthreads = 20
+ walltime = 0.000489
+ err = 4.664227e-04
+
+*************zeta_openmp*************
+n = 2048
+ nproc/nthreads = 20
+ walltime = 0.000474
+ err = 4.664227e-04
+
+*************zeta_openmp*************
+n = 4096
+ nproc/nthreads = 20
+ walltime = 0.000477
+ err = 2.331742e-04
+
+*************zeta_openmp*************
+n = 4096
+ nproc/nthreads = 20
+ walltime = 0.000474
+ err = 2.331742e-04
+
+*************zeta_openmp*************
+n = 8192
+ nproc/nthreads = 20
+ walltime = 0.000487
+ err = 1.165778e-04
+
+*************zeta_openmp*************
+n = 8192
+ nproc/nthreads = 20
+ walltime = 0.000495
+ err = 1.165778e-04
+
+*************zeta_openmp*************
+n = 8192
+ nproc/nthreads = 20
+ walltime = 0.000543
+ err = 1.165778e-04
+
+*************zeta_openmp*************
+n = 16384
+ nproc/nthreads = 20
+ walltime = 0.000552
+ err = 5.828660e-05
+
+*************zeta_openmp*************
+n = 16384
+ nproc/nthreads = 20
+ walltime = 0.000541
+ err = 5.828660e-05
+
