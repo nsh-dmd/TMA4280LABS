@@ -1,0 +1,132 @@
+*************machin_openmp*************
+n = 32
+ nproc/nthreads = 20
+ walltime = 0.000511
+ err = 4.440892e-16
+
+*************machin_openmp*************
+n = 32
+ nproc/nthreads = 20
+ walltime = 0.000440
+ err = 4.440892e-16
+
+*************machin_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000511
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000467
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 64
+ nproc/nthreads = 20
+ walltime = 0.000444
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 128
+ nproc/nthreads = 20
+ walltime = 0.000499
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 128
+ nproc/nthreads = 20
+ walltime = 0.000483
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 128
+ nproc/nthreads = 20
+ walltime = 0.000460
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 256
+ nproc/nthreads = 20
+ walltime = 0.000538
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 256
+ nproc/nthreads = 20
+ walltime = 0.000503
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 512
+ nproc/nthreads = 20
+ walltime = 0.000596
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 512
+ nproc/nthreads = 20
+ walltime = 0.000536
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 1024
+ nproc/nthreads = 20
+ walltime = 0.000675
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 1024
+ nproc/nthreads = 20
+ walltime = 0.000609
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 2048
+ nproc/nthreads = 20
+ walltime = 0.000810
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 2048
+ nproc/nthreads = 20
+ walltime = 0.000753
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 4096
+ nproc/nthreads = 20
+ walltime = 0.001146
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 4096
+ nproc/nthreads = 20
+ walltime = 0.001111
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 8192
+ nproc/nthreads = 20
+ walltime = 0.001705
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 8192
+ nproc/nthreads = 20
+ walltime = 0.001664
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 16384
+ nproc/nthreads = 20
+ walltime = 0.002981
+ err = 8.881784e-16
+
+*************machin_openmp*************
+n = 16384
+ nproc/nthreads = 20
+ walltime = 0.002786
+ err = 8.881784e-16
+
