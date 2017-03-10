@@ -14,7 +14,9 @@ double calculate_sum(double *vector, int n) {
     return s;
 }
 
-double* gen_reimann_vector (int n, double *vector) {
+double* gen_reimann_vector (int n) {
+    double *vector = (double*) malloc(n*sizeof(double));
+
    #pragma omp parallel for schedule(static)
    for (size_t i = 1; i <= n; i++) {
         vector[i] = 1. / (i*i);
@@ -25,7 +27,7 @@ double reimann_pi (int n, double *v) {
     return sqrt(6.0 * calculate_sum(v , n));
 }
 void print_to_file(char* test_name, int n, double walltime, double error) {
-    FILE *pFile = fopen("parallel_test.txt", "a+");
+    FILE *pFile = fopen("parallel_test.txt", "w+");
     fprintf( pFile,"*************%s*************\n", test_name );
     // fputs( "**************************\n", pFile );
     fprintf(pFile,"n = %d\nwalltime = %f\nerr = %e\n\n", n, walltime, error);
