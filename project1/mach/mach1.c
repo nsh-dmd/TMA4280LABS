@@ -1,4 +1,3 @@
-#include "../util.h"
 #include "mach0.h"
 #include "mpi.h"
 
@@ -6,11 +5,9 @@ int main(int argc, char **argv) {
 
     int n = atoi(argv[1]);
     if ( argc < 2 || !power_of_2(n) ) {
-    //   MPI_Finalize();
       return 1;
     }
 
-    double partial_sum=0., total_sum=0.;
     int rank, nproc;
 
     Vector_Tuple vectors_m, scattered_m;
@@ -23,13 +20,13 @@ int main(int argc, char **argv) {
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 
     int chunk_size = n/nproc;
+    double partial_sum=0., total_sum=0.;
 
     if (rank == 0) {
         start_time = MPI_Wtime();
         MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
         // partial machin vectors sends to every process
         vectors_m = gen_machin_vector(n);
-        // printf("element %d = %f\n", );
     }
 
     // each process will have its own partial vector
@@ -40,7 +37,7 @@ int main(int argc, char **argv) {
     MPI_Scatter( vectors_m.v1, chunk_size, MPI_DOUBLE, scattered_m.v1, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
     MPI_Scatter( vectors_m.v2, chunk_size, MPI_DOUBLE, scattered_m.v2, chunk_size, MPI_DOUBLE, 0, MPI_COMM_WORLD );
 
-    partial_sum = machin_formula(n, scattered_m);
+    partial_sum = machin_formula(chunk_size, scattered_m);
     MPI_Reduce(&partial_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {

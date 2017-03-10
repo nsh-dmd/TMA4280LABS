@@ -32,8 +32,8 @@ double machin_formula(int n) {
 }
 
 void verification_test(int n) {
-
-  double i, error_m = 0, error_z = 0;
+  int i=0;
+  double error_m = 0., error_z = 0.;
 
   FILE *pFile = fopen("vtest.txt", "w+");
   fprintf( pFile,"**************************\n Verification test:\n" );
@@ -41,9 +41,11 @@ void verification_test(int n) {
 
   if ( n < 25 ) {
     for ( int k=1; k <= n; k++ ) {
-      i = pow(2., k);
+      i = pow(2, k);
     //   Vector_Tuple t = gen_machin_vector(n);
-      error_m = abs_error(machin_formula(i));
+      double m = machin_formula(i);
+      printf("mach_sum=%.20f\n", m);
+      error_m = abs_error(machin_formula(1<<k));
     //   free(t.v1);
     //   free(t.v2);
       error_z = abs_error(reimann_pi(i));
