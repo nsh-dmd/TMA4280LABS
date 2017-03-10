@@ -12,7 +12,7 @@ EXEOBJ=$(patsubst %.c, %.o, $(EXESRC))
 CLEAN_FILES+=$(EXE) $(EXEOBJ)
 
 LIB=libutil.a
-LIBSRC=util.c zeta/zeta1.c utest.c vtest.c reduc/recur.c reduc/allreduce.c zeta/zeta0.c mach/mach0.c mach/mach1.c 
+LIBSRC=util.c zeta/zeta1.c utest.c vtest.c reduc/recur.c reduc/allreduce.c zeta/zeta0.c mach/mach0.c mach/mach1.c
 LIBHEADER=util.h zeta/zeta0.h mach/mach0.h
 LIBOBJ=$(patsubst %.c, %.o, $(LIBSRC))
 CLEAN_FILES+=$(LIB) $(LIBOBJ)
@@ -50,23 +50,23 @@ vtest:	vtest.o $(LIB)
 	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
 	./$@
 
-# MPI zeta
-zeta1:	zeta/zeta1.o $(LIB)
-	@echo "EXE $@"
-	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
-	./$@
-
-# Recursive doubling sum
-recur:	reduc/recur.o $(LIB)
-	@echo "EXE $@"
-	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
-	./$@
-
-# Allreduce
-allreduce: reduc/allreduce.o $(LIB)
-	@echo "EXE $@"
-	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
-	./$@
+# # MPI zeta
+# zeta1:	zeta/zeta1.o $(LIB)
+# 	@echo "EXE $@"
+# 	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+# 	./$@
+#
+# # Recursive doubling sum
+# recur:	reduc/recur.o $(LIB)
+# 	@echo "EXE $@"
+# 	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+# 	./$@
+#
+# # Allreduce
+# allreduce: reduc/allreduce.o $(LIB)
+# 	@echo "EXE $@"
+# 	@$(CC) $(LDFLAGS) -o $@ $^ $(LNKLIBS)
+# 	./$@
 
 
 clean:

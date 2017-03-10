@@ -42,17 +42,13 @@ void verification_test(int n) {
   if ( n < 25 ) {
     for ( int k=1; k <= n; k++ ) {
       i = pow(2., k);
-    //   Vector_Tuple t = gen_machin_vector(n);
       error_m = abs_error(machin_formula(i));
-    //   free(t.v1);
-    //   free(t.v2);
       error_z = abs_error(reimann_pi(i));
       fprintf(pFile, "k = %d \t Mach error = %e \n", k,  error_m);
       fprintf(pFile, "k = %d \t Zeta error = %e \n", k,  error_z);
       fputs( "**************************\n", pFile );
     }
   }
-  // else fprintf(pFile, "n = %d \t Error = %f \n", n, abs_error(machin_pi()) );
   else printf("ERROR! n must be less than 25!\n");
 
   fclose(pFile);

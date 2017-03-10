@@ -21,7 +21,6 @@ void print_to_file(char* test_name, int n, int nproc, double walltime, double er
     fprintf(pFile,"n = %d\n nproc/nthreads = %d\n walltime = %f\n err = %e\n\n", n, nproc, walltime, error);
 }
 int power_of_2(int n) {
-
     if ((n & (n - 1)) ) {
         printf("Usage:\n");
         printf("  make n\n\n");
