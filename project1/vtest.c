@@ -41,10 +41,10 @@ void verification_test(int n) {
 
   if ( n < 25 ) {
     for ( int k=1; k <= n; k++ ) {
-      i = pow(2, k);
-    //   Vector_Tuple t = gen_machin_vector(n);
-      double m = machin_formula(i);
-      printf("mach_sum=%.20f\n", m);
+      //i = pow(2, k);
+      //Vector_Tuple t = gen_machin_vector(n);
+      //double m = machin_formula(i);
+      //printf("mach_sum=%.20f\n", m);
       error_m = abs_error(machin_formula(1<<k));
     //   free(t.v1);
     //   free(t.v2);
@@ -54,7 +54,6 @@ void verification_test(int n) {
       fputs( "**************************\n", pFile );
     }
   }
-  // else fprintf(pFile, "n = %d \t Error = %f \n", n, abs_error(machin_pi()) );
   else printf("ERROR! n must be less than 25!\n");
 
   fclose(pFile);

@@ -1,5 +1,6 @@
 #include "hybrid.h"
 
+// int hybrid_mach(int argc, char **argv) {
 int main(int argc, char **argv) {
 
     int n = atoi(argv[1]);

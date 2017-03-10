@@ -1,0 +1,60 @@
+*************machin_hybrid*************
+n = 32
+ nproc/nthreads = 4
+ walltime = 0.022838
+ err = 4.440892e-16
+
+*************machin_hybrid*************
+n = 64
+ nproc/nthreads = 4
+ walltime = 0.022783
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 128
+ nproc/nthreads = 4
+ walltime = 0.022813
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 256
+ nproc/nthreads = 4
+ walltime = 0.022842
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 512
+ nproc/nthreads = 4
+ walltime = 0.022800
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 1024
+ nproc/nthreads = 4
+ walltime = 0.022802
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 2048
+ nproc/nthreads = 4
+ walltime = 0.022882
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 4096
+ nproc/nthreads = 4
+ walltime = 0.022918
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 8192
+ nproc/nthreads = 4
+ walltime = 0.023214
+ err = 8.881784e-16
+
+*************machin_hybrid*************
+n = 16384
+ nproc/nthreads = 4
+ walltime = 0.023358
+ err = 8.881784e-16
+
