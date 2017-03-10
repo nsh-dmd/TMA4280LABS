@@ -46,12 +46,12 @@ int main(int argc, char **argv) {
     if (rank == 0) {
         printf("Error = %e\n", abs_error(total_sum));
         printf ("Elapsed time =  %f \n", MPI_Wtime() - start_time);
-        // print_to_file("")
-    	free(scattered_m.v1);
-    	free(scattered_m.v2);
+        print_to_file("machin_mpi", n, nproc, MPI_Wtime() - start_time, abs_error(total_sum));
         free(vectors_m.v1);
         free(vectors_m.v2);
     }
+    free(scattered_m.v1);
+    free(scattered_m.v2);
 
     MPI_Finalize();
 

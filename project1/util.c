@@ -24,7 +24,9 @@ int power_of_2(int n) {
 }
 
 void print_to_file(char* test_name, int n, int nproc, double walltime, double error) {
-    FILE *pFile = fopen("parallel_test.txt", "a+");
+    char name[15];
+    strcpy(name, test_name);
+    FILE *pFile = fopen(strcat(name, ".txt"), "a+");
     fprintf( pFile,"*************%s*************\n", test_name );
     fputs( "**************************\n", pFile );
     fprintf(pFile,"n = %d\nnproc = %d\nwalltime = %f\nerr = %e\n\n", n, nproc, walltime, error);
