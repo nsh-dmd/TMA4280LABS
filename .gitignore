@@ -9,6 +9,10 @@
 *.pdf
 *.log
 *.txt
+*.make
+*.cmake
+poisson
+poisson-f
 vtest
 utest
 zeta0
