@@ -8,3 +8,62 @@
 0.082803,4.239162e-01
 0.082765,3.004280e-01
 0.082943,2.127857e-01
+*************zeta_hybrid*************
+n = 32
+ nproc/nthreads = 16
+ walltime = 0.021380
+ err = 4.587990e+00
+
+*************zeta_hybrid*************
+n = 64
+ nproc/nthreads = 16
+ walltime = 0.019828
+ err = 3.288784e+00
+
+*************zeta_hybrid*************
+n = 128
+ nproc/nthreads = 16
+ walltime = 0.020910
+ err = 2.341270e+00
+
+*************zeta_hybrid*************
+n = 256
+ nproc/nthreads = 16
+ walltime = 0.021728
+ err = 1.666034e+00
+
+*************zeta_hybrid*************
+n = 512
+ nproc/nthreads = 16
+ walltime = 0.020445
+ err = 1.184921e+00
+
+*************zeta_hybrid*************
+n = 1024
+ nproc/nthreads = 16
+ walltime = 0.082666
+ err = 8.419878e-01
+
+*************zeta_hybrid*************
+n = 2048
+ nproc/nthreads = 16
+ walltime = 0.082786
+ err = 5.977103e-01
+
+*************zeta_hybrid*************
+n = 4096
+ nproc/nthreads = 16
+ walltime = 0.082803
+ err = 4.239162e-01
+
+*************zeta_hybrid*************
+n = 8192
+ nproc/nthreads = 16
+ walltime = 0.082765
+ err = 3.004280e-01
+
+*************zeta_hybrid*************
+n = 16384
+ nproc/nthreads = 16
+ walltime = 0.082943
+ err = 2.127857e-01
