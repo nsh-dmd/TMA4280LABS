@@ -14,9 +14,8 @@ int main(int argc, char **argv) {
     // verification_test(n);
 
     // hybrid mach
-    hybrid_mach(argc, argv);
+    // hybrid_mach(argc, argv);
 
 
     return 0;
-
 }

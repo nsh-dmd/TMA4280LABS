@@ -41,6 +41,10 @@ void verification_test(int n) {
 
   if ( n < 25 ) {
     for ( int k=1; k <= n; k++ ) {
+<<<<<<< HEAD
+      i = pow(2., k);
+      error_m = abs_error(machin_formula(i));
+=======
       //i = pow(2, k);
       //Vector_Tuple t = gen_machin_vector(n);
       //double m = machin_formula(i);
@@ -48,6 +52,7 @@ void verification_test(int n) {
       error_m = abs_error(machin_formula(1<<k));
     //   free(t.v1);
     //   free(t.v2);
+>>>>>>> 8af8626735cf3799bc0c2cb73b90d63314dec7bf
       error_z = abs_error(reimann_pi(i));
       fprintf(pFile, "k = %d \t Mach error = %e \n", k,  error_m);
       fprintf(pFile, "k = %d \t Zeta error = %e \n", k,  error_z);
