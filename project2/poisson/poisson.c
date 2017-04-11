@@ -11,7 +11,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
+#include <omp.h>
+#include <mpi.h>
+
 
 #define PI 3.14159265358979323846
 #define true 1
@@ -27,6 +31,11 @@ void transpose(real **bt, real **b, size_t m);
 real rhs(real x, real y);
 void fst_(real *v, int *n, real *w, int *nn);
 void fstinv_(real *v, int *n, real *w, int *nn);
+real exact_solution(real x, real y);
+
+void parallel_transpose(int rank, int nproc, int m, double *bt, double *b, \
+                        double *sendbuf, double *recvbuf, int *counts, \
+                        int *displs, size_t *local_columns, size_t *col_displacements) ;
 
 int main(int argc, char **argv)
 {
@@ -69,8 +78,8 @@ int main(int argc, char **argv)
     size_t *local_columns = (size_t *) malloc( nproc * sizeof(size_t) );
     size_t *col_displacements = (size_t *) malloc( sizeof(size_t) );
 
-    size_t *counts = (size_t *) malloc( nproc * sizeof(size_t) );
-    size_t *displs = (size_t *) malloc( nproc * sizeof(size_t) );
+    int *counts = (int *) malloc( nproc * sizeof(int) );
+    int *displs = (int *) malloc( nproc * sizeof(int) );
 
     // load balancing, partition the matrix in vectors
     for (size_t i = 0; i < nproc; i++) {
@@ -94,8 +103,8 @@ int main(int argc, char **argv)
         columns++ ;
     }
 
-    double *sendbuff = mk_1D_array ( chunk_size, false );
-    double *recvbuff = mk_1D_array ( chunk_size, false );
+    double *sendbuf = mk_1D_array ( chunk_size, false );
+    double *recvbuf = mk_1D_array ( chunk_size, false );
 
 /*
     // Grid points
@@ -119,7 +128,7 @@ int main(int argc, char **argv)
     #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
-            b[i][j] = h * h * rhs(grid[i], grid[j]);
+            b[ i*m+j ] = h * h * rhs( h*col_displacements[rank] , h*j );
         }
     }
 
@@ -130,6 +139,7 @@ int main(int argc, char **argv)
         int thread_num = omp_get_thread_num();
         fst_( b + (i * m), &n, z[thread_num], &nn );
     }
+
     /*
     transpose(bt, b, m);
     for (size_t i = 0; i < m; i++) {
@@ -137,7 +147,8 @@ int main(int argc, char **argv)
     }
     */
 
-    //TODO: Implement/Add parallel transpose function
+    // transpose
+    parallel_transpose(rank, nproc, m, bt, b, sendbuf, recvbuf, counts, displs, local_columns, col_displacements);
 
     // Invers transform
     #pragma omp parallel for schedule(static)
@@ -151,7 +162,7 @@ int main(int argc, char **argv)
     for (size_t i = 0; i < local_columns[rank]; i++) {
         for (size_t j = 0; j < m; j++) {
             size_t index = i * m + j;
-            bt[i][j] = bt[index] / (diag[j] + diag[ col_displacements[rank]+i ] );
+            bt[ index ] = bt[ index ] / ( diag[j] + diag[ col_displacements[rank]+i ] );
         }
     }
 
@@ -159,14 +170,17 @@ int main(int argc, char **argv)
     // Transform
     #pragma omp parallel for schedule ( static )
     for ( size_t i = 0; i < local_columns[rank]; i++ ) {
+        int thread_num = omp_get_thread_num();
         fst_( bt + (i * m), &n, z[thread_num], &nn );
     }
 
-    //TODO: Implement/Add parallel transpose function
     /* transpose(b, bt, m);
     for (size_t i = 0; i < m; i++) {
         fstinv_(b[i], &n, z, &nn);
     } */
+    // transpose
+    parallel_transpose(rank, nproc, m, b, bt, sendbuf, recvbuf, counts, displs, local_columns, col_displacements);
+
 
     // Invers
     #pragma omp parallel for schedule(static)
@@ -184,7 +198,7 @@ int main(int argc, char **argv)
         for (size_t j = 0; j < m; j++) {
 
             size_t index = i * m + j;
-            real x = h * i + h * coldispls[rank];
+            real x = h * i + h * col_displacements[rank];
             real y = j * h;
 
             // To verify and calculate the error
@@ -230,9 +244,39 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void parallel_transpose( void ) {
+void parallel_transpose(int rank, int nproc, int m, double *bt, double *b, \
+                        double *sendbuf, double *recvbuf, int *counts, \
+                        int *displs, size_t *local_columns, size_t *col_displacements)
+{
+    #pragma omp parallel for schedule(static)
+    for (size_t p = 0; p < nproc; p++) {
+        for (size_t col = 0; col < local_columns[rank]; col++) {
+            size_t r_index = col * m + col_displacements[p];
+            size_t s_index = displs[p] + col * local_columns[p];
+            // printf('read: %d \t', r_index);
+            // printf('write: %d \n', s_index);
 
-    // TODO: Implement transpose function using MPI_ALltoallv
+
+        // copy blocks of matrix into the send buffer
+        memcpy( sendbuf + s_index, b + r_index, local_columns[p] * sizeof(double) );
+        }
+    }
+    MPI_Alltoallv( sendbuf, counts, displs, MPI_DOUBLE, recvbuf, counts, displs, MPI_DOUBLE, MPI_COMM_WORLD );
+
+    #pragma omp parallel for schedule(static)
+    for (size_t p = 0; p < nproc; p++)
+    {
+        for (size_t col = 0; col < local_columns[rank]; col++)
+        {
+            for (size_t c = 0; c < local_columns[p]; c++)
+            {
+                size_t r_index = (c * local_columns[rank]) + displs[p] + col;
+                size_t s_index = m * col + col_displacements[p] + c;
+                bt[s_index] = recvbuf[r_index];
+            }
+        }
+    }
+
 }
 
 // Test function
