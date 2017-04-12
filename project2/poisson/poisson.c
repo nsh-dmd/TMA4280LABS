@@ -215,13 +215,13 @@ int main(int argc, char **argv)
     MPI_Reduce( &error_max, &error, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD );
 
     if (rank == 0) {
-        printf ("u_max =  %e\n", umax);
-        printf ("Max error =  %e\n", error);
+        printf ("{max_u:%e,", umax);
+        printf ("max_err:%e,", error);
     }
 
     if (rank == 0) {
-        printf("n=%d\n", n);
-        printf ("Time =  %f \n", MPI_Wtime() - start_time);
+        printf("n:%d,", n);
+        printf ("time:%f}\n", MPI_Wtime() - start_time);
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
