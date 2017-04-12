@@ -37,6 +37,10 @@ void parallel_transpose(int rank, int nproc, int m, double *bt, double *b, \
                         double *sendbuf, double *recvbuf, int *counts, \
                         int *displs, size_t *local_columns, size_t *col_displacements) ;
 
+void parallel_transpose(int rank, int nproc, int m, double *bt, double *b, \
+                        double *sendbuf, double *recvbuf, int *counts, \
+                        int *displs, int *local_columns, int *coldispls) ;
+
 int main(int argc, char **argv)
 {
     if (argc < 2) {
@@ -178,9 +182,9 @@ int main(int argc, char **argv)
     for (size_t i = 0; i < m; i++) {
         fstinv_(b[i], &n, z, &nn);
     } */
+
     // transpose
     parallel_transpose(rank, nproc, m, b, bt, sendbuf, recvbuf, counts, displs, local_columns, col_displacements);
-
 
     // Invers
     #pragma omp parallel for schedule(static)
@@ -278,6 +282,7 @@ void parallel_transpose(int rank, int nproc, int m, double *bt, double *b, \
     }
 
 }
+
 
 // Test function
 real test_function(real x, real y) {
