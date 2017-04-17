@@ -29,6 +29,7 @@ real *mk_1D_array(size_t n, bool zero);
 real **mk_2D_array(size_t n1, size_t n2, bool zero);
 void transpose(real **bt, real **b, size_t m);
 real rhs(real x, real y);
+real test_function(real x, real y);
 void fst_(real *v, int *n, real *w, int *nn);
 void fstinv_(real *v, int *n, real *w, int *nn);
 real exact_solution(real x, real y);
@@ -215,13 +216,12 @@ int main(int argc, char **argv)
     MPI_Reduce( &error_max, &error, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD );
 
     if (rank == 0) {
-        printf ("{max_u:%e,", umax);
-        printf ("max_err:%e,", error);
-    }
-
-    if (rank == 0) {
-        printf("n:%d,", n);
-        printf ("time:%f}\n", MPI_Wtime() - start_time);
+        printf("%d,", nproc);
+        printf("%d,", max_threads);
+        printf ("%e,", umax);
+        printf ("%e,", error);
+        printf ("%f,", MPI_Wtime() - start_time);
+        printf("%d\n", n);    
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -295,7 +295,9 @@ real exact_solution(real x, real y) {
 }
 
 real rhs(real x, real y) {
-    return 2 * (y - y*y + x - x*x);
+   return 2 * (y - y*y + x - x*x);
+  //   return 5 * PI * PI * sin(PI * x) * sin(2 * PI * y);
+  //    return  exp(x) * sin(2 * PI * x) * sin(2 * PI * y);
 }
 
 void transpose(real **bt, real **b, size_t m)
